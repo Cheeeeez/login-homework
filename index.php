@@ -93,6 +93,7 @@ if (isset($_REQUEST["register-submit"])) {
 
 // Login request
 if (isset($_REQUEST["login-submit"])) {
+
     $_SESSION["members"] = $memberManager->getMemberList();
 
     $loginEmail = $_REQUEST["email"];
@@ -111,11 +112,13 @@ if (isset($_REQUEST["login-submit"])) {
                     header("Location: home.php");
                 } else {
                     $passwordError = "*Wrong password";
+                    session_destroy();
                 }
             }
         }
         if (empty($_SESSION["email"])) {
             $emailError = "*Email is not registered";
+            session_destroy();
         }
     }
 }
@@ -162,7 +165,7 @@ if (isset($_REQUEST["login-submit"])) {
                                   <?php else: ?>style="display: block"<?php endif; ?>>
                                 <div class="form-group">
                                     <input type="text" name="email" id="email" tabindex="1" class="form-control"
-                                           placeholder="Email Address" value="<?php echo $_SESSION["email"]; ?>">
+                                           placeholder="Email Address" value="">
                                     <span style="color: red">
                                         <?php echo $emailError; ?>
                                     </span>
